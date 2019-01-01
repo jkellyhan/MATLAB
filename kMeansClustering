@@ -1,0 +1,60 @@
+function [clusterList] = kMeansClustering(meanList, dataset, k,dist,tol, maxIter)
+
+indexArray = zeros(size(dataset,1),1);
+m = 1;
+n = 0;
+
+while n == 0
+    
+    m = m + 1;
+    
+    for i = 1:size(dataset,1)
+
+        temp = [];
+
+        for j = 1:k
+
+            temp = [temp dist(meanList(j,:),dataset(i,:))];
+
+        end
+
+        [~,I] = min(temp);
+        indexArray(i) = I;
+
+    end
+
+    newArray = [];
+
+    for i = 1:k
+
+        points = dataset(indexArray == i,:);
+        newMean = mean(points);
+        newArray = [newArray; newMean];
+
+    end
+
+    tolArray = [];
+
+    for p = 1:k
+
+         tolArray = [tolArray dist(newArray(p,:),meanList(p,:))];
+
+    end
+
+    if all(tolArray <= tol) || m > maxIter
+
+         n = 1;
+
+    end
+
+    meanList = newArray;
+    clusterList = indexArray
+    
+end
+
+    
+    
+
+
+
+    
