@@ -1,0 +1,30 @@
+function path = brownian2(seed,x0,y0,v,dt,nT)
+
+
+rng(seed);
+n = rand(1, nT);
+x0(1) = x0;
+y0(1) = y0;
+time(1) = 0;
+
+%%So instead of moving right left up or down according to the switch case,
+%%instead given a randomly generated angle, come up with the x and y
+
+vt = v * dt;
+
+for i = 1:nT
+    
+    dx = cos(2*pi*n(i)) * vt;
+    dy = sin(2*pi*n(i)) * vt;
+    x0(i+1) = x0(i) + dx;
+    y0(i+1) = y0(i) + dy;
+    time(i+1) = time(i) + dt;
+
+end
+
+path = [time' x0' y0'];
+
+figure
+plot(x0,y0)
+
+end
