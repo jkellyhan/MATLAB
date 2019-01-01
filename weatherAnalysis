@@ -1,0 +1,40 @@
+function [h temp_results] = weatheranalysis(temperatures)
+
+indexErase = [];
+
+for i = 1:length(temperatures)
+    if (temperatures(i,4) == -9999) || (temperatures(i,5) == -9999)
+        indexErase = [indexErase i]
+    end
+end
+
+temperatures(indexErase,:) = [];
+
+size(temperatures)
+
+newArray1 = [];
+newArray2 = [];
+
+for i = 1:12
+    
+   temperatures(:,2) == i
+   meanData = mean((temperatures((temperatures(:,2) == i),4) + temperatures((temperatures(:,2) == i),5))/2)
+   stdData = std((temperatures((temperatures(:,2) == i),4) + temperatures((temperatures(:,2) == i),5))/2)
+   newArray1 = [newArray1 meanData]
+   newArray2 = [newArray2 stdData]
+   
+end
+
+months = 1:12;
+temp_results = [newArray1' newArray2']
+h = figure
+errorbar(months, newArray1, newArray2)
+
+
+end
+
+
+ 
+
+
+
